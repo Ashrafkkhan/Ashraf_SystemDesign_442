@@ -1,10 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * GreenLeaf Bank — Legacy BankAccount class
+/** 
+ * GreenLeaf Bank — Legacy BankAccount class 
  *  
- * Job Description: Manages a customer's account balance and processes core financial transactions like deposits and withdrawals.
+ * Job Description: Manages a customer's account balance and processes core financial transactions like deposits and withdrawals. 
+ *
+ * Wrap-up Summary: We ended up with 4 distinct classes to handle accounts, databases, emails, and statements separately. This makes testing much easier because we can check one piece at a time without relying on the others. For example, we can test withdrawals without needing a real database or email server connected. If something stops working, it is now much simpler to track down exactly which class caused the problem.
  * 
  * This class is intentionally messy. 
  * It mixes account state, validation, persistence, notification, 
@@ -31,7 +33,7 @@ public class BankAccount {
     // Every deposit/withdrawal gets logged here as a plain string — 
     // logging logic is mixed directly into deposit()/withdraw(). 
     private List<String> transactionLog = new ArrayList<>(); 
-
+ 
     private AccountRepository accountRepository;
     private NotificationService notificationService;
 
@@ -177,25 +179,21 @@ public class BankAccount {
     // "Persistence" — pretend database logic living inside the account 
     // ---------------------------------------------------- 
  
-    // Database logic has been extracted to AccountRepository.
-
+    // Persistence logic has been extracted to AccountRepository.
+ 
     // ---------------------------------------------------- 
     // "Notification" — pretend email logic living inside the account 
     // ---------------------------------------------------- 
  
     // Notification logic has been extracted to NotificationService.
-
+ 
     // ---------------------------------------------------- 
     // "Statement generation" — formatting logic living inside the account 
     // ---------------------------------------------------- 
  
     public void printStatement() { 
-        System.out.println("---- Statement for Account #" + accountNumber + " (" + name + ") ----"); 
-        for (String entry : transactionLog) { 
-            System.out.println(entry); 
-        } 
-        System.out.println("Current Balance: Rs. " + balance); 
-        System.out.println("-----------------------------------------------------"); 
+        StatementGenerator statementGenerator = new StatementGenerator();
+        System.out.println(statementGenerator.generate(this));
     } 
  
     // ---------------------------------------------------- 
@@ -208,5 +206,9 @@ public class BankAccount {
     public double getBalance() { return balance; } 
     public String getStatus() { return status; } 
     public String getAccountType() { return accountType; } 
-    public boolean hasPin() { return pin != null; } 
+    public boolean hasPin() { return pin != null; }
+
+    public List<String> getTransactionLog() {
+        return transactionLog;
+    }
 }
