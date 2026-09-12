@@ -10,6 +10,8 @@ import java.util.List;
  * 
  * Section 2 OCP Wrap-up: For the Salary Account requirement, we only had to create brand new files (SalaryAccount.java and SalaryInterestPolicy.java) and edit Main.java to instantiate them. Zero existing policy classes were changed to support the new account type, successfully following the Open/Closed Principle!
  * 
+ * Section 3 LSP Wrap-up: Making FixedDepositAccount implement Withdrawable and simply throwing an exception is the wrong fix because it violates the Liskov Substitution Principle. The LSP states that objects should be replaceable by their subtypes without breaking the program's correctness. If a class claims to be "Withdrawable" but crashes when asked to withdraw, it violates the caller's behavioral expectations and causes the program to fail when substituted.
+ * 
  * This class is intentionally messy. 
  * It mixes account state, validation, persistence, notification, 
  * statement formatting, and interest calculation all in one place. 
