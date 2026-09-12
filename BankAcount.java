@@ -37,7 +37,7 @@ public class BankAccount {
     private AccountRepository accountRepository;
     private NotificationService notificationService;
 
-    public BankAccount(int accountNumber, String name, int age, double balance, String accountType) { 
+    public BankAccount(int accountNumber, String name, int age, double balance, String accountType, NotificationService notificationService) { 
  
         // Validation logic mixed directly into the constructor 
         if (age < 18) { 
@@ -60,7 +60,7 @@ public class BankAccount {
         this.pin = null;
 
         this.accountRepository = new AccountRepository();
-        this.notificationService = new NotificationService();
+        this.notificationService = notificationService;
     } 
  
     // ---------------------------------------------------- 
