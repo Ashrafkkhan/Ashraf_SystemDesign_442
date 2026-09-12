@@ -161,18 +161,9 @@ public class BankAccount {
         return pin != null && pin.equals(enteredPin); 
     } 
  
-    // ---------------------------------------------------- 
-    // Interest calculation — an if/else chain baked into the account itself 
-    // ---------------------------------------------------- 
- 
     public double calculateInterest() { 
-        if (accountType.equals("Savings")) { 
-            return balance * 0.04; 
-        } else if (accountType.equals("Current")) { 
-            return balance * 0.01; 
-        } else { 
-            return 0.0; 
-        } 
+        InterestCalculator calculator = new InterestCalculator();
+        return calculator.calculateInterest(this.accountType, this.balance);
     } 
  
     // ---------------------------------------------------- 
