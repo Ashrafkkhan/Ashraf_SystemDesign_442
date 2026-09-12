@@ -8,6 +8,8 @@ import java.util.List;
  *
  * Wrap-up Summary: We ended up with 4 distinct classes to handle accounts, databases, emails, and statements separately. This makes testing much easier because we can check one piece at a time without relying on the others. For example, we can test withdrawals without needing a real database or email server connected. If something stops working, it is now much simpler to track down exactly which class caused the problem.
  * 
+ * Section 2 OCP Wrap-up: For the Salary Account requirement, we only had to create brand new files (SalaryAccount.java and SalaryInterestPolicy.java) and edit Main.java to instantiate them. Zero existing policy classes were changed to support the new account type, successfully following the Open/Closed Principle!
+ * 
  * This class is intentionally messy. 
  * It mixes account state, validation, persistence, notification, 
  * statement formatting, and interest calculation all in one place. 
