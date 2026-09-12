@@ -8,6 +8,10 @@ import java.util.List;
  *
  * Wrap-up Summary: We ended up with 4 distinct classes to handle accounts, databases, emails, and statements separately. This makes testing much easier because we can check one piece at a time without relying on the others. For example, we can test withdrawals without needing a real database or email server connected. If something stops working, it is now much simpler to track down exactly which class caused the problem.
  * 
+ * Section 2 OCP Wrap-up: For the Salary Account requirement, we only had to create brand new files (SalaryAccount.java and SalaryInterestPolicy.java) and edit Main.java to instantiate them. Zero existing policy classes were changed to support the new account type, successfully following the Open/Closed Principle!
+ * 
+ * Section 3 LSP Wrap-up: Making FixedDepositAccount implement Withdrawable and simply throwing an exception is the wrong fix because it violates the Liskov Substitution Principle. The LSP states that objects should be replaceable by their subtypes without breaking the program's correctness. If a class claims to be "Withdrawable" but crashes when asked to withdraw, it violates the caller's behavioral expectations and causes the program to fail when substituted.
+ * 
  * This class is intentionally messy. 
  * It mixes account state, validation, persistence, notification, 
  * statement formatting, and interest calculation all in one place. 
@@ -37,7 +41,7 @@ public class BankAccount {
     private AccountRepository accountRepository;
     private NotificationService notificationService;
 
-    public BankAccount(int accountNumber, String name, int age, double balance, String accountType) { 
+    public BankAccount(int accountNumber, String name, int age, double balance, String accountType, NotificationService notificationService) { 
  
         // Validation logic mixed directly into the constructor 
         if (age < 18) { 
@@ -60,7 +64,7 @@ public class BankAccount {
         this.pin = null;
 
         this.accountRepository = new AccountRepository();
-        this.notificationService = new NotificationService();
+        this.notificationService = notificationService;
     } 
  
     // ---------------------------------------------------- 
@@ -161,18 +165,9 @@ public class BankAccount {
         return pin != null && pin.equals(enteredPin); 
     } 
  
-    // ---------------------------------------------------- 
-    // Interest calculation — an if/else chain baked into the account itself 
-    // ---------------------------------------------------- 
- 
     public double calculateInterest() { 
-        if (accountType.equals("Savings")) { 
-            return balance * 0.04; 
-        } else if (accountType.equals("Current")) { 
-            return balance * 0.01; 
-        } else { 
-            return 0.0; 
-        } 
+        InterestCalculator calculator = new InterestCalculator();
+        return calculator.calculateInterest(this.accountType, this.balance);
     } 
  
     // ---------------------------------------------------- 
