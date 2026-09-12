@@ -3,6 +3,8 @@ import java.util.List;
 
 /**
  * GreenLeaf Bank — Legacy BankAccount class
+ * 
+ * Job Description: Manages a customer's account balance and processes core financial transactions like deposits and withdrawals.
  *
  * This class is intentionally messy.
  * It mixes account state, validation, persistence, notification,
