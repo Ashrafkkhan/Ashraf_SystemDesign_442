@@ -14,8 +14,7 @@ import java.util.List;
  * 2. Notification/Email: Changes if we switch from email to SMS, or change the email provider.
  * 3. Statement Formatting: Changes if the statement layout changes, or if we export to PDF instead of console.
  * 4. Interest Calculation: Changes if interest rates change or new account types are introduced.
- * 5. Transaction Logging: Changes if we store logs as structured objects instead of strings.
- * 6. Business/Validation Rules: Changes if the minimum age or minimum balance rules change.
+ * 5. Business/Validation Rules: Changes if the minimum age or minimum balance rules change.
  */
 public class BankAccount {
 
